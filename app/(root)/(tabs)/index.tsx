@@ -5,11 +5,13 @@ import Search from "@/app/components/Search";
 import icons from "@/constants/icons";
 import { getLastestProperties, getProperties } from "@/lib/appwrite";
 import { useGlobalContext } from "@/lib/global-provider";
+import seed from "@/lib/seed";
 import { useAppwrite } from "@/lib/useAppwrite";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import {
   ActivityIndicator,
+  Button,
   FlatList,
   Image,
   Text,
@@ -20,6 +22,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const { user } = useGlobalContext();
+
   const params = useLocalSearchParams<{ query?: string; filter?: string }>();
 
   const { data: latestProperties, loading: latestPropertiesLoading } =
@@ -49,16 +52,16 @@ export default function Index() {
       query: params.query!,
       limit: 6,
     });
-  }, [params]);
+  }, [params.filter, params.query]);
 
   return (
     <SafeAreaView className="h-full bg-white">
       <FlatList
-        data={[]}
+        data={properties}
         renderItem={({ item }) => (
           <Card item={item} onPress={() => handleCardPress(item.$id)} />
         )}
-        keyExtractor={(item) => item.toString()}
+        keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
         columnWrapperClassName="flex gap-5 px-5"
