@@ -144,3 +144,16 @@ export async function getProperties({
     return [];
   }
 }
+export async function getPropertiesById({ id }: { id: string }) {
+  try {
+    const result = await databases.getDocument(
+      config.databaseId!,
+      config.propertiesCollectionId!,
+      id,
+    );
+    return result;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
