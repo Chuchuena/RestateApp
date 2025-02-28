@@ -25,9 +25,9 @@ const Filters = () => {
       showsHorizontalScrollIndicator={false}
       className="mb-2 mt-3"
     >
-      {categories.map((item) => (
+      {categories.map((item, index) => (
         <TouchableOpacity
-          key={item.category}
+          key={index}
           onPress={() => handleCategoryPress(item.category)}
           className={`mr-4 flex flex-col items-start rounded-full px-4 py-2 ${selectedCategory === item.category ? "bg-primary-300" : "border border-primary-200 bg-primary-100"}`}
         >
